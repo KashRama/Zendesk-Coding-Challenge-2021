@@ -2,6 +2,7 @@ var zendesk = require('node-zendesk');
 const axios = require('axios');
 const express = require('express');
 const readline = require("readline");
+const readlineSync = require("readline-sync");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -20,6 +21,7 @@ const rl = readline.createInterface({
    output: process.stdout,
    terminal: false
 });
+
 
 app.get('/', async (req, res) => {
    client.tickets.list((err, req, result) => {
@@ -46,15 +48,7 @@ app.get('/', async (req, res) => {
             rl.close();
          }
       })
-
-      // console.log('\n','created_at', '\t\t', 'requester_id', '\t', 'submitter_id', '\t', 'ticket_form_id');
-      // data.forEach((ticket) => {
-      //    console.log('\n', ticket.created_at, '\t', ticket.requester_id, '\t', ticket.submitter_id, '\t', ticket.ticket_form_id);
-      // })
    });
-
-   // const ret = await axios.get('https://zcccodingchallenge-2021.zendesk.com/api/v2/tickets.json/');
-   // console.log(ret)
 });
 
 const readSingle = (data, ticketNumber) => {
@@ -86,21 +80,22 @@ const readAll = (data) => {
    next25(tracker, data);
    tracker += 25;
    while (tracker < data.length) {
-      rl.question('Enter n to view the following 25 tickets: ', (n) => {
-         if (n === 'n') {
-            next25(tracker, data);
-            tracker += 25;
-         }
-         else{
-            tracker = data.length;
-         }
-      })
+      const n = readlineSync.question('Enter n to view the following 25 tickets: ');
+      if (n === 'n') {
+      next25(tracker, data);
+      tracker += 25;
+      }
+      else{
+         tracker = data.length;
+      }
    }
+   console.log('\nNo more Tickets. ');
    rl.close(); 
 }
 
 const next25 = (startIdx, data) => {
-   for(let i = startIdx; i < startIdx + 25 && data.length; i++){
+   console.log('\n','created_at', '\t\t', 'requester_id', '\t', 'submitter_id', '\t', 'ticket_form_id');
+   for(let i = startIdx; (i < startIdx + 25) && (i != data.length); i++){
       const ticket = data[i];
       console.log('\n', ticket.created_at, '\t', ticket.requester_id, '\t', ticket.submitter_id, '\t', ticket.ticket_form_id);
    }
@@ -112,6 +107,6 @@ app.listen(port, () => {
 });
 
 rl.on('close', () => {
-   console.log('Thank you!');
+   console.log('\nThank you!');
    process.exit(0);
 }) 

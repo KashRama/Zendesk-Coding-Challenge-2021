@@ -14,7 +14,8 @@
     "dependencies": {
         "axios": "^0.24.0",
         "express": "^4.17.1",
-        "node-zendesk": "^2.1.0"
+        "node-zendesk": "^2.1.0",
+        "readline-sync": "^1.4.10"
     },
     "devDependencies": {
         "nodemon": "^2.0.15"
