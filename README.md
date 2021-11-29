@@ -25,7 +25,13 @@ Here, replace username and token with the username and token that you would like
 ### Step 3: Running the app
 In the browser of your choice, go to http://localhost:3000/.
 Then, in your terminal run npm run dev.
+
 Follow the prompts in the terminal to see the proper tickets show up.
+
+To run the unit tests, run the following command in the terminal:
+```
+node test.js
+```
 
 # Usage
 Based on a ticket IDs, this app will print out the creation time, requester ID, submitter ID, and ticket form ID. This will help manage a large amount of tickets. The user can view any single ticket at a time or view all the tickets at once. Also, the user has the option to exit the app at any time.
