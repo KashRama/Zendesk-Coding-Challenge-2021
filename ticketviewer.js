@@ -11,8 +11,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 const client = zendesk.createClient({
-  username:  'kramachandrula21@yahoo.com',
-  token:     'eiGNUuUnbY8mtTg4owTuEq2kPTf0RcCxo9a9LPKH',
+  username:  'username',
+  token:     'token',
   remoteUri: 'https://zcccodingchallenge-2021.zendesk.com/api/v2'
 });
 
@@ -26,7 +26,7 @@ const rl = readline.createInterface({
 app.get('/', async (req, res) => {
    client.tickets.list((err, req, result) => {
       if (err) {
-         console.log(err);
+         console.log('');
          return;
       }
 
@@ -52,10 +52,10 @@ app.get('/', async (req, res) => {
 });
 
 const readSingle = (data, ticketNumber) => {
-   console.log('\n','created_at', '\t\t', 'requester_id', '\t', 'submitter_id', '\t', 'ticket_form_id');
    let found = false; 
    data.forEach((ticket) => {
       if(ticket.id === ticketNumber){
+         console.log('\n','created_at', '\t\t', 'requester_id', '\t', 'submitter_id', '\t', 'ticket_form_id');
          console.log('\n', ticket.created_at, '\t', ticket.requester_id, '\t', ticket.submitter_id, '\t', ticket.ticket_form_id);
          found = true;
          rl.close();
@@ -103,7 +103,6 @@ const next25 = (startIdx, data) => {
 
 
 app.listen(port, () => {
-   console.log(`Server is running on port: ${port}`);
 });
 
 rl.on('close', () => {
