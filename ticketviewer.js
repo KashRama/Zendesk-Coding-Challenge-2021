@@ -26,11 +26,9 @@ const rl = readline.createInterface({
 app.get('/', async (req, res) => {
    client.tickets.list((err, req, result) => {
       if (err) {
-         console.log('');
+         console.log('Not a valid API');
          return;
       }
-
-      console.log("Select a view option: ");
 
       const data = JSON.parse(JSON.stringify(result, null, 2, true));
 
